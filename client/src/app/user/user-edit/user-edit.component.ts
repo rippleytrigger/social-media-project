@@ -14,14 +14,14 @@ import { server } from '../../shared/server.url'
   providers: [UploadService]
 })
 export class UserEditComponent implements OnInit {
-  private identity
-  private token
-  private userEditForm: FormGroup
-  private user: User
-  private status
-  private formSubmitted: boolean
-  private url: string
-  private filesToUpload: Array<File>
+  public identity
+  public token
+  public userEditForm: FormGroup
+  public user: User
+  public status
+  public formSubmitted: boolean
+  public url: string
+  public filesToUpload: Array<File>
 
   constructor(
     private authService: AuthService,

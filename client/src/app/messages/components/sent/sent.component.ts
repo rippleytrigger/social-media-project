@@ -12,18 +12,18 @@ import { server } from '../../../shared/server.url'
 })
 
 export class SentComponent{
-    private title: string
-    private message: Message
-    private identity
-    private token
-    private url
-    private status
-    private messages: Message[]
-    private page: number
-    private pages
-    private total
-    private next_page
-    private prev_page
+    public title: string
+    public message: Message
+    public identity
+    public token
+    public url
+    public status
+    public messages: Message[]
+    public page: number
+    public pages
+    public total
+    public next_page
+    public prev_page
 
 
     constructor(

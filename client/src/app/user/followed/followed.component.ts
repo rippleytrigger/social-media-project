@@ -13,20 +13,20 @@ import { server } from '../../shared/server.url'
 })
 export class FollowedComponent implements OnInit {
 
-  private identity
-  private token
-  private next_page
-  private prev_page
-  private page
-  private pages: number
-  private total: number
-  private users: User[]
-  private status: string
-  private url: string
-  private follows: any[]
-  private followed
-  private userPageId
-  private user: User
+  public identity
+  public token
+  public next_page
+  public prev_page
+  public page
+  public pages: number
+  public total: number
+  public users: User[]
+  public status: string
+  public url: string
+  public follows: any[]
+  public followed
+  public userPageId
+  public user: User
 
   constructor(
     private activatedRoute: ActivatedRoute, 

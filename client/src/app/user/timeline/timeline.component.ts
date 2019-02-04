@@ -11,17 +11,17 @@ import { Publication } from 'src/app/shared/publication.model';
   styleUrls: ['./timeline.component.scss'],
 })
 export class TimelineComponent implements OnInit {
-  private identity: object
-  private user: object
-  private token: string
-  private url: string
-  private status: string
-  private total: number
-  private page: number
-  private pages: number
-  private publications: Publication[]
-  private itemsPerPage: number
-  private showImage
+  public identity: object
+  public user: object
+  public token: string
+  public url: string
+  public status: string
+  public total: number
+  public page: number
+  public pages: number
+  public publications: Publication[]
+  public itemsPerPage: number
+  public showImage
 
   constructor( 
     private activatedRoute: ActivatedRoute, 

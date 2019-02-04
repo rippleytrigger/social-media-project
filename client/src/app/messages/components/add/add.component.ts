@@ -13,13 +13,13 @@ import { NgForm } from '@angular/forms';
 })
 
 export class AddComponent implements OnInit{
-    private title: string
-    private message: Message
-    private identity
-    private token
-    private url
-    private status
-    private follows
+    public title: string
+    public message: Message
+    public identity
+    public token
+    public url
+    public status
+    public follows
 
     constructor(
         private activatedRoute: ActivatedRoute,

@@ -14,13 +14,13 @@ import { UploadService } from 'src/app/user/upload.service';
   providers: [UploadService]
 })
 export class SidebarComponent implements OnInit {
-  private url: string
-  private identity
-  private token: string
-  private stats: object
-  private status: string
-  private publication: Publication
-  private filesToUpload: Array<File>
+  public url: string
+  public identity
+  public token: string
+  public stats: object
+  public status: string
+  public publication: Publication
+  public filesToUpload: Array<File>
 
   sidebarForm = new FormGroup({
     textArea: new FormControl('', Validators.required),

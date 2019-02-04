@@ -12,14 +12,14 @@ import { Follow } from 'src/app/shared/follow.model';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  private identity
-  private token: string 
-  private url: string
-  private status: string
-  private user: User
-  private stats: object
-  private followed
-  private following
+  public identity
+  public token: string 
+  public url: string
+  public status: string
+  public user: User
+  public stats: object
+  public followed
+  public following
 
   constructor(
     private authService: AuthService,

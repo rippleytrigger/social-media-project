@@ -6,7 +6,7 @@ import { Component, OnInit, DoCheck } from '@angular/core'
 })
 
 export class MainComponent{
-    private title: string
+    public title: string
 
     constructor()
     {

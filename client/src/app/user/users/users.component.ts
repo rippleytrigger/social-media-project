@@ -15,17 +15,17 @@ import { Publication } from 'src/app/shared/publication.model';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  private identity
-  private token
-  private next_page
-  private prev_page
-  private page
-  private pages: number
-  private total: number
-  private users: User[]
-  private status: string
-  private url: string
-  private follows: any[]
+  public identity
+  public token
+  public next_page
+  public prev_page
+  public page
+  public pages: number
+  public total: number
+  public users: User[]
+  public status: string
+  public url: string
+  public follows: any[]
 
   constructor(
     private activatedRoute: ActivatedRoute, 

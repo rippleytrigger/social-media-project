@@ -13,16 +13,16 @@ import { server } from 'src/app/shared/server.url'
 })
 export class PublicationsComponent implements OnInit {
 
-  private identity: object
-  private token: string
-  private url: string
-  private status: string
-  private total: number
-  private page: number
-  private pages: number
-  private publications: Publication[]
-  private itemsPerPage: number
-  @Input() private user: string
+  public identity: object
+  public token: string
+  public url: string
+  public status: string
+  public total: number
+  public page: number
+  public pages: number
+  public publications: Publication[]
+  public itemsPerPage: number
+  @Input() public user: string
 
   constructor( 
     private activatedRoute: ActivatedRoute, 
