@@ -1,0 +1,80 @@
+/* You can add global styles to this file, and also import other style files */
+
+$primary-color: #dc3545;
+
+body
+{
+    overflow-x: hidden;
+}
+
+.bg-red
+{
+    background-color: $primary-color;
+}
+
+.border-red
+{
+    border: 1px solid $primary-color;
+}
+
+.m-10
+{
+    margin-bottom: 10px;
+}
+
+.m-25
+{
+    margin-bottom: 25px;
+}
+
+.ml-2em
+{
+    margin-left: 2em;
+}
+
+#messages
+{
+    #sidebar-messages
+    {
+        min-height: 75vh;
+        border-right: 1px solid $primary-color;
+
+        .nav-pills .nav-link
+        {
+            border-radius: 0;
+        }
+    }
+}
+
+
+.publications
+{
+    .card-avatar
+    {
+        align-self: flex-start;
+        margin-right: 1.5em;
+
+        img
+        {
+            height: 50px;
+            width: 50px;
+            border: 1px solid #ccc;
+        }
+    }
+    .card-text
+    {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .card-image img
+    {
+        width: 100%;
+        height: auto;
+    }
+}
+
+#sidebar-messages
+{
+    padding-right: 0;
+}

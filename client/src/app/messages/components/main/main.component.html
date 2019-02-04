@@ -1,0 +1,33 @@
+<div class="row" id="messages">
+    <div class="col-lg-4" id="sidebar-messages">
+        <h3 class="text-center">{{ title }}</h3>
+
+        <div class="sidebar-admin">
+            <ul class="nav nav-pills nav-fill flex-column text-left">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" [routerLink]="['/messages/send']"  routerLinkActive="active" >
+                        Send a Message
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" [routerLink]="['/messages/received']" routerLinkActive="active">
+                        Received Messages
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" [routerLink]="['/messages/sent']" routerLinkActive="active">
+                        Sent Messages
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" [routerLink]="['/home']" routerLinkActive="active">
+                        Information
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <router-outlet></router-outlet>
+    </div>
+</div>

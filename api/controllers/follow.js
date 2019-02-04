@@ -67,8 +67,47 @@ function getFollowingUsers(request, response)
 
         if(!follows) return response.status(404).send({message: 'There are no followed users'})
 
-        return response.status(200).send({ total, pages: Math.ceil(total/itemsPerPage), follows })
+        followUserIds(request.user.sub).then((value) =>
+        {
+            return response.status(200).send
+            ({ 
+               total, 
+               pages: Math.ceil(total/itemsPerPage),
+               follows, 
+               userFollowing: value.following, 
+               usersFollowMe: value.followed,  
+            })
+        })
     })
+}
+
+// Se puede hacer un servicio para evitar la duplicacion de metodos
+async function followUserIds(userId)
+{
+    const following = await Follow.find({'user': userId}).select({'_id': 0, '_v': 0, 'user': 0}).exec().then( (follows) =>
+    {
+        const followsClean = []
+
+        follows.forEach((follow) => followsClean.push(follow.followed))
+
+        return followsClean
+    })
+    .catch((error) => handleError(error))
+
+    const followed = await Follow.find({'followed': userId}).select({'_id': 0, '_v': 0, 'followed': 0}).exec().then( (follows) =>
+    {
+        const followsClean = []
+
+        follows.forEach((follow) => followsClean.push(follow.user))
+
+        return followsClean
+    })
+    .catch((error) => handleError(error))
+
+    return {
+        following,
+        followed
+    }
 }
 
 function getFollowedUsers(request, response)
@@ -98,7 +137,17 @@ function getFollowedUsers(request, response)
 
         if(!follows) return response.status(404).send({message: 'No users are following you'})
 
-        return response.status(200).send({ total, pages: Math.ceil(total/itemsPerPage), follows })
+        followUserIds(request.user.sub).then((value) =>
+        {
+            return response.status(200).send
+            ({ 
+               total, 
+               pages: Math.ceil(total/itemsPerPage),
+               follows, 
+               userFollowing: value.following, 
+               usersFollowMe: value.followed,  
+            })
+        })
     })
 }
 
@@ -107,21 +156,24 @@ function getMyfollowers(request, response)
 {
     const userId = request.user.sub
 
+    // Returns the followings
     let find = Follow.find({ user: userId })
 
+    // If this is true, it return the followers
     if(request.params.followed)
     {
         find = Follow.find({ followed: userId })
     }
 
-    Follow.find({ user: userId }).populate('user followed').exec((error, follows) =>
-    {
-        if(error) return response.status(500).send({ message: 'Server Error' })
+    find.populate('user followed').exec().then(
+        follows =>
+        {
+            if(!follows) return response.status(404).send({ message: 'You are not following any user' })
 
-        if(!follows) return response.status(404).send({ message: 'You are not following any user' })
+            return response.status(200).send({ follows })
+        }
 
-        return response.status(200).send({ follows })
-    })
+    ).catch(error => { return response.status(500).send({ message: 'Server Error' }) })
 }
 
 function getYourfollowers(request, response)

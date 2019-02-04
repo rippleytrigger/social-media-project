@@ -1,0 +1,28 @@
+#profile
+{
+    display: flex;
+
+    .avatar img
+    {
+        width: 100%;
+        border-radius: 400px;
+        height: 250px;
+        width: 250px;
+    }
+
+    .nick
+    {
+        color: gray;
+    }
+
+    .profile-content
+    {
+        margin-left: 2em;
+        align-self: center;
+    }
+
+    .stats
+    {
+        line-height: 2;
+    }
+}

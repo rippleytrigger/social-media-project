@@ -1,0 +1,60 @@
+<div class="row justify-content-center">
+
+  <div class="col-lg-4 col-sm-10 col-xs-10">
+
+    <h3>Sign Up Now!!!</h3>
+    
+   
+    <div class="alert alert-success" *ngIf="validSignUp && formSubmitted">
+      You successfully sign up in our website. Please check out your <a [routerLink]="[ '/signin']">account</a>.
+    </div>
+   
+    <div class="alert alert-danger" *ngIf="!validSignUp && formSubmitted">
+      The email or nickname that you sent is already taken by another person.  
+    </div>
+    
+    <hr />
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name"> Name </label>
+        <input type="text" name="name" id="name" class="form-control" formControlName="name" aria-describedby="helpId" 
+        [ngClass]="{'border-red': !signupForm.get('name').valid && signupForm.get('name').touched}">
+        <small id="helpId" class="text-muted" *ngIf="!signupForm.get('name').valid && signupForm.get('name').touched">
+          Invalid Name
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="name"> Surnames </label>
+        <input type="text" name="surname" id="surname" class="form-control" formControlName="surname" aria-describedby="helpId"
+        [ngClass]="{'border-red': !signupForm.get('surname').valid && signupForm.get('surname').touched}">
+        <small id="helpId" class="text-muted" *ngIf="!signupForm.get('surname').valid && signupForm.get('surname').touched">
+          Invalid Surname
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="nickname"> Nickname </label>
+        <input type="text" name="nickname" id="nickname" class="form-control" formControlName="nickname" aria-describedby="helpId"
+        [ngClass]="{'border-red': !signupForm.get('nickname').valid && signupForm.get('nickname').touched}">
+        <small id="helpId" class="text-muted" *ngIf="!signupForm.get('nickname').valid && signupForm.get('nickname').touched">
+          Invalid Nickname
+        </small>
+      </div> 
+      <div class="form-group">
+        <label for="email"> Email </label>
+        <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelpId" formControlName="email"
+        [ngClass]="{'border-red': !signupForm.get('email').valid && signupForm.get('email').touched}">
+        <small id="emailHelpId" class="form-text text-muted" *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched">
+          Invalid Email
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="password"> Password </label>
+        <input type="password" class="form-control" name="password" id="password" formControlName="password"
+        [ngClass]="{'border-red': !signupForm.get('password').valid && signupForm.get('password').touched}">
+        <small id="emailHelpId" class="form-text text-muted" *ngIf="!signupForm.get('password').valid && signupForm.get('password').touched">
+          Invalid Password
+        </small>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Signup</button>
+    </form>
+</div>

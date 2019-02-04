@@ -1,0 +1,47 @@
+<div class="col-lg-10">
+        <h3> {{ title }} </h3>
+
+        <!-- List of sended messages -->
+        <div id="sent-messages" *ngIf="messages">
+                <div class="card-columns">
+                        <div *ngFor="let message of messages" class="card">
+                                <ng-container *ngIf="message.emitter.image; else elseTemplate">
+                                        <img src="{{ url + '/get-image-user/' + message.emitter.image }}" class="card-img-top"
+                                                alt="...">
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                        <img src="{{ 'assets/no-img.jpg' }}" class="card-img-top" alt="...">
+                                </ng-template>
+                                <div class="card-body">
+                                        <h5 class="card-title">
+                                                <a [routerLink]="[ '/profile', message.emitter._id ]">
+                                                        {{ message.emitter.name }} {{ message.emitter.surname }}
+                                                </a>
+                                        </h5>
+                                        <p class="card-text">@{{ message.emitter.nick }}</p>
+
+                                        <span class="date"> {{ message.created_at | amFromUnix | amTimeAgo }}</span>
+
+                                        <span class="nickname">
+                                                <a [routerLink]="['/profile', message.receiver._id]"> 
+                                                        Sent To @{{ message.receiver.nick }}
+                                                </a>
+                                        </span>
+
+                                        <p class="card-message">
+                                                {{ message.text }}
+                                        </p>
+                                </div>
+                        </div>
+                </div>
+
+
+                <!-- Paginacion -->
+                <ul class="pagination justify-content-center">
+                        <li *ngIf="page > 1"> <a class="page-link" [routerLink]="[ '/messages/sent', prev_page ]">
+                                        Before </a> </li>
+                        <li *ngIf="pages != page"> <a class="page-link" [routerLink]="[ '/messages/sent', next_page ]">
+                                        After </a> </li>
+                </ul>
+        </div>
+</div>

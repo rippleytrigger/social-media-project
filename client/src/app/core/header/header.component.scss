@@ -1,0 +1,26 @@
+/* Navigation */
+.redex-navbar
+{
+    margin-bottom: 2rem;
+
+    .dropdown-menu
+    {
+        background-color: #dc3545;
+    }
+
+    .avatar
+    {
+        vertical-align: middle;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-top: 6px;
+        margin-right: 2px;
+
+        img
+        {
+            height: 32px;
+            width: 32px;
+        }
+    }
+}
+

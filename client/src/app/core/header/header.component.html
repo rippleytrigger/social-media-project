@@ -1,0 +1,59 @@
+<div class="navigate col-xs-1-12">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-red redex-navbar">
+    <a class="navbar-brand" href="#">{{ title }}</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+        aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0" *ngIf="identity">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/']"><i class="fa fa-home" aria-hidden="true"></i> Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/timeline']"> <i class="fa fa-th-list" aria-hidden="true"></i> Timeline</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['/people']"> <i class="fa fa-user" aria-hidden="true"></i> People </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['/messages']"> <i class="fa fa-comment" aria-hidden="true"></i> Messages </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav align-self-end mr-auto mt-2 mt-lg-0" *ngIf="!identity">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/signin']"><i class="fa fa-address-book-o" aria-hidden="true"></i> Sign In <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/signup']"> <i class="fa fa-user-circle" aria-hidden="true"></i> Sign Up </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav navbar-right" *ngIf="identity">
+          <li class="avatar" routerLinkActive="active">
+            <!-- Load User Image -->
+              <img src="{{ url + '/get-image-user/' + identity.image }}" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#">
+              {{ identity.name }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['/profile', identity._id ]"><i class="fa fa-address-book-o" aria-hidden="true"></i> My profile <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item active" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['/my-data']"> <i class="fa fa-user-circle" aria-hidden="true"></i> My data </a>
+              </li> 
+              <li class="nav-item active" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['/logout']" (click)="onLogout()"> <i class="fa fa-user-circle" aria-hidden="true"></i> Log Out </a>
+              </li> 
+            </ul>
+          </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+    
+  

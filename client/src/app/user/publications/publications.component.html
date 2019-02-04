@@ -1,0 +1,39 @@
+<div class="publications">
+    <div *ngFor="let publication of publications" class="item-publication card m-25">
+        <div class="card-body">
+            <div class="card-avatar">
+                <ng-container *ngIf="publication.user.image; else elseTemplate">
+                    <img src="{{ url + '/get-image-user/' + publication.user.image }}" 
+                    class="rounded-circle" alt="...">
+                </ng-container>
+                <ng-template #elseTemplate>
+                    <img src="{{ 'assets/no-img.jpg' }}" class="rounded-circle" alt="...">
+                </ng-template>
+            </div>
+            <div>
+                <div class="m-10">
+                    <span class="card-title">
+                        <a [routerLink]="[ '/profile', publication.user._id ]"> 
+                            @{{ publication.user.nick }}
+                        </a>
+                    </span>
+                    &nbsp;|&nbsp;
+                    <small class="date">
+                        {{ publication.created_at | amFromUnix | amTimeAgo }}
+                    </small>
+                </div>
+                <p class="card-text">{{ publication.text }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 text-center m-25" *ngIf="publications && publications.length">
+      <button class="btn btn-success" (click)="viewMore()" *ngIf="!noMore">
+        View more publications
+      </button>
+    </div>
+
+    <div *ngIf="publications.length == 0">
+        <p> The user does not have any publication yet. </p>
+    </div>
+</div>

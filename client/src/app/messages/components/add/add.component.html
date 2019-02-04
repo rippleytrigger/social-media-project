@@ -1,0 +1,43 @@
+<div class="col-lg-10">
+    <h3> {{ title }} </h3>
+
+    <div class="alert alert-success" *ngIf="status == 'success'">
+        You successfully sent your message. You can view it at 
+        <a [routerLink]="[ '/messages/sent']">sent messages</a>.
+    </div>
+         
+    <div class="alert alert-danger" *ngIf="status == 'error'">
+        The message could not be send correctly.
+    </div>
+
+    <!-- Form send messages-->
+    <form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)" 
+    *ngIf="follows && follows.length != 0; else warningMessage">
+        <div class="m-10">
+            <label>For:</label>
+            <!-- List of followers -->
+            <select name="receiver" [(ngModel)]="message.receiver"
+            class="form-control" required>
+                <option *ngFor="let follow of follows" value="{{ follow.user._id }}">
+                    {{follow.user.name + ' ' + follow.user.surname}}
+                </option>
+            </select>
+        </div>
+
+        <div class="m-10">
+            <label id="message-field">Message:</label>
+            <textarea id="message-field" name="text" #text="ngModel" [(ngModel)]="message.text"
+            class="form-control" required></textarea>
+
+            <small *ngIf="!text.valid && text.touched">You must put a valid message</small>
+        </div>
+        <button class="btn btn-success" type="submit" [disabled]="!formAdd.valid"> {{ title }}</button>
+    </form>
+
+    
+    <ng-template #warningMessage>
+        <div class="alert alert-warning">
+            You need to have at least one follower in order to send a message.
+        </div>
+    </ng-template>
+</div>

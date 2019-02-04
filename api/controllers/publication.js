@@ -59,6 +59,7 @@ function getPublications(request, response)
         {
             followsClean.push(follows.followed)
         })
+        followsClean.push(request.user.sub)
 
         Publication.find({user: {'$in': followsClean}}).sort('-created_at').populate('user')
         .paginate(page, itemsPerPage, (error, publications, total) =>
@@ -71,11 +72,43 @@ function getPublications(request, response)
             { totalItems: total, 
               publications,
               pages: Math.ceil(total/itemsPerPage),
-              page: page
+              page: page,
+              itemsPerPage: itemsPerPage
             })
         })
     })
     .catch((error) => { if(error) return response.status(500).send({ message: 'Error at getting followings' }) })
+}
+
+function getPublicationsUser(request, response)
+{
+    let page = 1
+
+    if(request.params.page) page = request.params.page
+
+    let user = request.user.sub
+    if(request.params.user)
+    {
+        user = request.params.user
+    }
+    
+    const itemsPerPage = 4
+
+    Publication.find({user: user }).sort('-created_at').populate('user')
+    .paginate(page, itemsPerPage, (error, publications, total) =>
+    {
+            if(error) return response.status(200).send({message: 'Error at getting publications'})
+
+            if(!publications) return response.status(404).send({message: 'There are no publications'})
+
+            return response.status(200).send(
+            { totalItems: total, 
+              publications,
+              pages: Math.ceil(total/itemsPerPage),
+              page: page,
+              itemsPerPage: itemsPerPage
+            })
+    })
 }
 
 function getPublication(request, response)
@@ -96,11 +129,9 @@ function deletePublication(request, response)
 {
     const publicationId = request.params.id
 
-    Publication.find({user: request.user.sub, '_id': publicationId}).remove((error, publicationRemoved) =>
+    Publication.find({user: request.user.sub, '_id': publicationId}).deleteOne((error) =>
     {
         if(error) return response.status(500).send({ message: 'Error at deleting the publication' })
-
-        if(!publicationRemoved) return response.status(404).send({ message: 'The publication has not been deleted' })
 
         return response.status(200).send({publication: 'Publication sucessfully deleted'})
     })
@@ -171,6 +202,7 @@ module.exports = {
     publicationTest,
     savePublications,
     getPublications,
+    getPublicationsUser,
     getPublication,
     deletePublication,
     uploadImage,

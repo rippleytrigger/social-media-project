@@ -1,0 +1,64 @@
+<div class="row justify-content-center">
+    <div class="col-lg-4 col-lg-offset-2 col-sm-4 col-sm-offset-2 col-xs-10">
+      <h3>Update my data</h3>
+
+      <hr />
+
+      <div class="alert alert-success" *ngIf="status == 'success' && formSubmitted">
+          You successfully update your user data!!!
+        </div>
+       
+        <div class="alert alert-danger" *ngIf="status == 'error' && formSubmitted">
+          You could not update the data. Please try again
+        </div>
+
+      <form [formGroup]="userEditForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name"> Name </label>
+          <input type="text" name="name" id="name" class="form-control" formControlName="name" aria-describedby="helpId" 
+          [ngClass]="{'border-red': !userEditForm.get('name').valid && userEditForm.get('name').touched}">
+          <small id="helpId" class="text-muted" *ngIf="!userEditForm.get('name').valid && userEditForm.get('name').touched">
+            Invalid Name
+          </small>
+        </div>
+        <div class="form-group">
+          <label for="name"> Surnames </label>
+          <input type="text" name="surname" id="surname" class="form-control" formControlName="surname" aria-describedby="helpId"
+          [ngClass]="{'border-red': !userEditForm.get('surname').valid && userEditForm.get('surname').touched}">
+          <small id="helpId" class="text-muted" *ngIf="!userEditForm.get('surname').valid && userEditForm.get('surname').touched">
+            Invalid Surname
+          </small>
+        </div>
+        <div class="form-group">
+            <label for="name"> Nickname </label>
+            <input type="text" name="surname" id="surname" class="form-control" formControlName="nick" aria-describedby="helpId"
+            [ngClass]="{'border-red': !userEditForm.get('nick').valid && userEditForm.get('nick').touched}">
+            <small id="helpId" class="text-muted" *ngIf="!userEditForm.get('nick').valid && userEditForm.get('nick').touched">
+              Invalid Nickname
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="name"> Email </label>
+            <input type="text" name="surname" id="surname" class="form-control" formControlName="email" aria-describedby="helpId"
+            [ngClass]="{'border-red': !userEditForm.get('email').valid && userEditForm.get('email').touched}">
+            <small id="helpId" class="text-muted" *ngIf="!userEditForm.get('email').valid && userEditForm.get('email').touched">
+              Invalid Email
+            </small>
+        </div>
+
+        <div class="form-group">
+          <label for="file"> Upload your profile photo </label>
+          <input type="file" class="form-control-file" name="file" id="file" placeholder="" aria-describedby="fileHelpId"
+          (change)="fileChangeEvent($event)">
+          <small id="fileHelpId" class="form-text text-muted">
+            Help text
+          </small>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" [disabled]="!userEditForm.valid">Update my data</button>
+      </form>
+    </div>
+    <div *ngIf="user.image" class="col-lg-4 col-lg-offset-2 col-sm-4 col-sm-offset-2">
+      <img src="{{ url + '/get-image-user/' + user.image }}" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+    </div>
+</div>

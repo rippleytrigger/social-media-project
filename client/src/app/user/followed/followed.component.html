@@ -1,0 +1,57 @@
+<div class="container">
+
+    <h3>Followers of @{{ user.nick }}</h3>
+    <hr/>
+  
+    <div class="row">
+  
+      <div class="col-lg-8">
+      
+          <div class="people" *ngIf="followed">
+            <div class="card-columns"> 
+                <div *ngFor="let follow of followed" class="card">
+                  <ng-container *ngIf="follow.user.image; else elseTemplate">
+                      <img src="{{ url + '/get-image-user/' + follow.user.image }}" class="card-img-top" alt="...">
+                  </ng-container>
+                  <ng-template #elseTemplate>
+                      <img src="{{ 'assets/no-img.jpg' }}" class="card-img-top" alt="...">
+                  </ng-template>
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <a [routerLink]="[ '/profile', follow.user._id ]"> 
+                        {{ follow.user.name }} {{ follow.user.surname }}
+                      </a>
+                    </h5>
+                    <p class="card-text">@{{ follow.user.nick }}</p>
+                    
+                    <div class="follow" *ngIf="identity._id != follow.user._id">
+                      <button class="btn btn-success" *ngIf="follows.indexOf(follow.user._id) < 0" (click)="followUser(follow.user._id)">
+                        <span> <i class="fa fa-plus" aria-hidden="true"></i> Follow </span>
+                      </button>
+        
+                      <button class="btn btn-primary" *ngIf="follows.indexOf(follow.user._id) >= 0 && follow.user._id != identity._id"
+                        (mouseenter)="onMouseEnter(follow.user._id)" (mouseleave)="onMouseLeave(follow.user._id)" [ngClass]="{'btn-danger': follow.user._id == followUserOver}">
+                        <ng-container *ngIf="follow.user._id == followUserOver; else elseTemplate">
+                            <span (click)="unFollowUser(follow.user._id)"> <i class="fa fa-minus" aria-hidden="true"></i>  Unfollow </span>
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                            <span> Following </span>
+                        </ng-template>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+      
+      
+            <!-- Paginacion -->
+            <ul class="pagination justify-content-center">
+              <li *ngIf="page > 1"> <a class="page-link" [routerLink]="[ '/following', userPageId ,prev_page ]"> Before </a> </li>
+              <li *ngIf="pages != page"> <a class="page-link" [routerLink]="[ '/following', userPageId, next_page ]"> After </a> </li>
+            </ul>
+          </div>
+        </div>
+        <app-sidebar class="col-lg-4"></app-sidebar>
+    </div>    
+  </div>
+    

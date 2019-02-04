@@ -49,7 +49,8 @@ function getReceivedMessage(request, response)
 
     //Find the message that the user has received
     // In populate, you can use a second argument to select the specific properties that you want back from the object
-    Message.find({receiver: userId}).populate('emitter', 'name surname image nick _id').paginate(page, itemsPerPage, (error, messages, total) =>
+    Message.find({receiver: userId}).populate('emitter receiver', 'name surname image nick _id').sort('-created_at')
+    .paginate(page, itemsPerPage, (error, messages, total) =>
     {
         if(error) return response.status(500).send({ message: 'Error at getting message' })
 
@@ -58,7 +59,8 @@ function getReceivedMessage(request, response)
         return response.status(200).send(
         { 
             total: total, 
-            page: Math.ceil(total/itemsPerPage), 
+            page: page, 
+            pages: Math.ceil(total/itemsPerPage),
             messages
         })
     })
@@ -75,7 +77,7 @@ function getEmittedMessage(request, response)
 
     //Find the message that the user has emitted a message
     // In populate, you can use a second argument to select the specific properties that you want back from the object
-    Message.find({emitter: userId}).populate('emitter receiver', 'name surname image nick _id').paginate(page, itemsPerPage, (error, messages, total) =>
+    Message.find({emitter: userId}).populate('emitter receiver', 'name surname image nick _id').sort('-created_at').paginate(page, itemsPerPage, (error, messages, total) =>
     {
         if(error) return response.status(500).send({ message: 'Error at getting message' })
 
@@ -84,7 +86,8 @@ function getEmittedMessage(request, response)
         return response.status(200).send(
         { 
             total: total, 
-            page: Math.ceil(total/itemsPerPage), 
+            page: page, 
+            pages: Math.ceil(total/itemsPerPage),
             messages
         })
     })

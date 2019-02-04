@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+
+    <div class="col-lg-4 col-sm-10">
+  
+      <h3>Sign In</h3>
+  
+      <hr />
+
+      <div class="alert alert-success" *ngIf="status == 'success' && formSubmitted">
+        You successfully signin. Welcome!!!
+      </div>
+     
+      <div class="alert alert-danger" *ngIf="status == 'error' && formSubmitted">
+        The email or password that you sent are not valid. Please put the right information
+      </div>
+      
+      <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name"> Email </label>
+          <input type="text" name="name" id="name" class="form-control" formControlName="email" aria-describedby="helpId" 
+          [ngClass]="{'border-red': !signinForm.get('email').valid && signinForm.get('email').touched}">
+          <small id="helpId" class="text-muted" *ngIf="!signinForm.get('email').valid && signinForm.get('email').touched">
+            Invalid Email
+          </small>
+        </div>
+        <div class="form-group">
+          <label for="name"> Pass </label>
+          <input type="password" name="password" id="password" class="form-control" formControlName="password" aria-describedby="helpId"
+          [ngClass]="{'border-red': !signinForm.get('password').valid && signinForm.get('password').touched}">
+          <small id="helpId" class="text-muted" *ngIf="!signinForm.get('password').valid && signinForm.get('password').touched">
+            Please put a password
+          </small>
+        </div>
+        <button class="btn btn-primary" [disabled]="!signinForm.valid">Sign In</button>
+      </form>
+    </div>
+  </div>

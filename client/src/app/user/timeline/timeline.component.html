@@ -1,0 +1,108 @@
+<div class="container">
+    <h3>Timeline</h3>
+
+    <button class="btn btn-success" (click)="refreshTimeline()"
+    *ngIf="publications && publications.length"> Update Publications </button>
+    <hr />
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="publications">
+                <div *ngFor="let publication of publications" class="item-publication card m-25">
+                    <div class="card-body">
+                        <div class="card-avatar">
+                            <ng-container *ngIf="publication.user.image; else elseTemplate">
+                                <img src="{{ url + '/get-image-user/' + publication.user.image }}" 
+                                class="rounded-circle" alt="...">
+                            </ng-container>
+                            <ng-template #elseTemplate>
+                                <img src="{{ 'assets/no-img.jpg' }}" class="rounded-circle" alt="...">
+                            </ng-template>
+                        </div>
+                        <div>
+                            <div class="m-10">
+                                <span class="card-title">
+                                    <a [routerLink]="[ '/profile', publication.user._id ]"> 
+                                        @{{ publication.user.nick }}
+                                    </a>
+                                </span>
+                                &nbsp;|&nbsp;
+                                <small class="date">
+                                    {{ publication.created_at | amFromUnix | amTimeAgo }}
+                                </small>
+                            </div>
+                            <p class="card-text">{{ publication.text }}</p>
+
+                            <div class="card-btn-delete-post" *ngIf="publication.user._id == identity._id">
+                                <!-- Button trigger modal -->
+                                <a href="#modal{{publication._id}}" role="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#modal{{publication._id}}">
+                                    Delete Publication
+                                </a>
+                                    
+                                <!-- Modal -->
+                                <div class="modal fade" id="modal{{publication._id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Are you sure you want to delete this publication?</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h6> You wont be able to recover it afterwards.</h6>
+                                                    <p>{{ publication.text }}</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                <button 
+                                                type="button" 
+                                                class="btn btn-secondary" 
+                                                data-dismiss="modal"
+                                                (click)="deletePublication(publication._id)"
+                                                >  
+                                                    Yes
+                                                </button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-btn-image" *ngIf="publication.file != null">
+                                <button 
+                                class="btn btn-warning" 
+                                (click)="showPublicationImage(publication._id)" 
+                                *ngIf="showImage != publication._id">
+
+                                <i class="fa fa-image" aria-hidden="true"></i> Show Picture
+                                </button>
+
+                                <button 
+                                class="btn btn-danger" 
+                                (click)="hidePublicationImage(publication._id)" 
+                                *ngIf="showImage == publication._id">
+                                    <i class="fa fa-window-close" aria-hidden="true"></i> Hide Picture
+                                </button>
+                            </div>
+                            
+
+                            <div class="card-image" *ngIf="publication.file != null 
+                            && showImage == publication._id">
+                                <img src="{{ url + '/get-image-pub/' + publication.file }}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="col-lg-12 text-center m-25" *ngIf="publications && publications.length">
+                    <button class="btn btn-success" (click)="viewMore()" *ngIf="!noMore">
+                        View more publications
+                    </button>
+                </div>
+                  
+                <div *ngIf="publications.length == 0">
+                    <p> Start following someone to get content. </p>
+                </div>
+            </div>             
+        </div>
+        <app-sidebar class="col-lg-4"></app-sidebar>
+    </div>
+</div>
+  

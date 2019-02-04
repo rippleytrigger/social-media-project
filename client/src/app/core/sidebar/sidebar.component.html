@@ -1,0 +1,79 @@
+<div id="user-card">
+  <div class="avatar">
+    <ng-container *ngIf="identity.image; else elseTemplate">
+        <img src="{{ url + '/get-image-user/' + identity.image }}" alt="user-image">
+    </ng-container>
+    <ng-template #elseTemplate>
+        <img src="{{ 'assets/no-img.jpg' }}" alt="user-image">
+    </ng-template>
+    <div class="name-surname">
+      <a [routerLink]="['/profile', identity._id]">
+        {{ identity.name }} {{ identity.surname }}
+      </a>
+      <br/>
+      <small class="text-muted"> @{{ identity.nick }}</small>
+    </div>
+    <div class="stats" *ngIf="stats">
+      <div class="following-data">
+        <a [routerLink]="['/following', identity._id, 1]">
+          <span class="label-stats">
+            Following
+          </span>
+          <span class="number-stats">
+            {{ stats.following }}
+          </span>
+        </a>
+      </div>
+      <div class="followed-data">
+          <a [routerLink]="['/followed', identity._id, 1]">
+            <span class="label-stats">
+              Followed
+            </span>
+            <span class="number-stats">
+              {{ stats.followed }}
+            </span>
+          </a>
+        </div>
+        <div class="publication-data">
+            <a href="#">
+              <span class="label-stats">
+                Publications
+              </span>
+              <span class="number-stats">
+                {{ stats.publications }}
+              </span>
+            </a>
+          </div>
+    </div>
+  </div>
+</div>
+
+<!-- Publications Form -->
+<div id="new-publication" class="panel panel-default">
+
+  <div class="alert alert-success" *ngIf="status == 'success'">
+    Your publication has been successfully posted.
+  </div>
+     
+  <div class="alert alert-danger" *ngIf="status == 'error'">
+    There was an error trying to post your publication.
+  </div>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="sidebarForm">
+    <div class="form-group">
+      <label for="thinking"> <b>What are you thinking today?</b></label>
+      <textarea class="form-control" name="thinking" id="thinking" rows="3" formControlName="textArea"></textarea>
+      <small id="fileHelpId" class="form-text text-muted" *ngIf="!sidebarForm.get('textArea').valid && sidebarForm.get('textArea').touched">
+        Please put a valid text
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="thinking-file">Upload a Photo</label>
+      <input type="file" class="form-control-file" name="thinking-file" id="thinking-file" 
+        formControlName="thinkingFile" 
+        aria-describedby="fileHelpId"
+        (change)="fileChangeEvent($event)">
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="!sidebarForm.valid">Send</button>
+  </form>
+</div>
